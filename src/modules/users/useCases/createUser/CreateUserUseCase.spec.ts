@@ -37,8 +37,6 @@ describe("Criar Usuário", () => {
 
     await createUserUseCase.execute(user);
 
-    expect(async () => {
-      await createUserUseCase.execute({ ...user, email: "outro" });
-    }).rejects.toThrow(CreateUserError);
+    expect(async () => createUserUseCase.execute(user)).rejects.toBeInstanceOf(CreateUserError);
   });
 });

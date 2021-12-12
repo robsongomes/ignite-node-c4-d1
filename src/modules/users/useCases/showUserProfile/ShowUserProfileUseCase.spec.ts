@@ -2,6 +2,7 @@ import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUs
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ICreateUserDTO } from "../createUser/ICreateUserDTO";
+import { ShowUserProfileError } from "./ShowUserProfileError";
 import { ShowUserProfileUseCase } from "./ShowUserProfileUseCase";
 
 describe("User Profile", () => {
@@ -27,5 +28,9 @@ describe("User Profile", () => {
     const userProfile = await showUserProfileUseCase.execute(userSaved.id + "");
 
     expect(userProfile).toBe(userSaved);
+  });
+
+  it("Deve lançar exceção quando o usuário não é encontrado", async () => {
+    expect(async () => await showUserProfileUseCase.execute("id_inexistente")).rejects.toBeInstanceOf(ShowUserProfileError)
   });
 });
